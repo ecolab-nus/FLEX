@@ -1,0 +1,33 @@
+// Simulator options +libext+.v+.sv+.vh+.vams -default_ext systemverilog -ieee1364 -gateloopwarn $(XPROP_SW) $(COVOPTS) $(SIMOPTS)
+-timescale 1ns/1ps -compcnfg -assert -access +c -uvm -nowarn FUNTSK
+
+// TB files
+$(TBFILES)/$(TBTOP)/$(TEST).sv
+
+// RTL files
+$(RTLFILES)/ff_rst.sv
+$(RTLFILES)/soc_pad.sv
+$(RTLFILES)/globals_top.vh
+$(RTLFILES)/clkgen.sv
+$(RTLFILES)/encoder_onehot.sv
+$(RTLFILES)/flex.sv
+$(RTLFILES)/router.sv
+$(RTLFILES)/simple_alu.sv
+$(RTLFILES)/tile_no_ldst.sv
+$(RTLFILES)/tile_ldst.sv
+$(RTLFILES)/iterCounter.sv
+$(RTLFILES)/ls_add_unit.sv
+$(RTLFILES)/configurator.sv
+$(RTLFILES)/clkgate.sv
+$(RTLFILES)/xbar_bypass.sv
+$(TARGET_GEN)/genviews-output/model/verilog/IN22FDX_R1PV_NFVG_W00008B024M02C256.v //TODO: Please select the verilog file for your memory
+$(TARGET_GEN)/genviews-output/model/verilog/IN22FDX_R1PV_NFVG_W00008B028M02C256.v //TODO: Please select the verilog file for your memory
+$(TARGET_GEN)/genviews-output/model/verilog/IN22FDX_SDPV_NFVG_W00256B016M08C064.v //TODO: Please select the verilog file for your memory
+$(TARGET_GEN)/genviews-output/model/verilog/submod/sdp_memory_generic.v //TODO: Please select the verilog file for your memory
+$(TARGET_GEN)/genviews-output/model/verilog/submod/r1ph_memory_generic.v //TODO: Please select the verilog file for your memory
+-y $(TARGET_GEN)
+-y $(CWPATH)
+-incdir $(RTLFILES)
+-incdir $(TBFILES)/$(TBTOP)
+-incdir $(TBCOMMON)
+-v $(TECHLIB)/model/verilog/GF22FDX_SC7P5T_116CPP_BASE_CSC28L.v //TODO: Please select the correct techlib for your PDKs
