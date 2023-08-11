@@ -3,8 +3,8 @@
 This repository contains architecture, compiler and design space exploration framework for FLEX, a novel CGRA architecture with flexible execution spectrum. FLEX introduces spatio-temporal vector dataflow execution for variable vector length(v). For each application kernel, FLEX DSE framework will perform exploration and will choose the best execution mode/ vector length(v). Please find the [paper]() for more details.
 
 
-## Framework
-
+## FLEX DSE Framework
+![Screenshot from 2023-08-11 15-58-45](https://github.com/ecolab-nus/FLEX/assets/5539032/c7e0e76e-05b0-41b2-a849-e5fc55aa333d)
 
 
 ### Directory Structure
