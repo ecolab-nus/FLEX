@@ -1,0 +1,72 @@
+digraph Region_18 {
+	graph [ nslimit = "1000.0",
+	orientation = landscape,
+		center = true,
+	page = "8.5,11",
+	compound=true,
+	size = "10,7.5" ] ;
+
+"Op_0" [ fontname = "Helvetica" shape = box, label = " phi i.074 BB=for.body3 HyIns=SELECT,
+0, ASAP=2, ALAP=2"]
+"Op_4" [ fontname = "Helvetica" shape = box, label = " or add7  C=0x1BB=for.body3 HyIns=OR,
+4, ASAP=3, ALAP=5"]
+"Op_6" [ fontname = "Helvetica" shape = box, label = " load manupa3 BB=for.body3 HyIns=LOAD,
+6, ASAP=6, ALAP=8"]
+"Op_61" [ fontname = "Helvetica" shape = box, label = " load manupa3 BB=for.body3 HyIns=LOAD,
+61, ASAP=6, ALAP=8"]
+"Op_7" [ fontname = "Helvetica" shape = box, label = " mul mul22 BB=for.body3 HyIns=MUL,
+7, ASAP=8, ALAP=9"]
+"Op_8" [ fontname = "Helvetica" shape = box, label = " add add24 BB=for.body3 HyIns=ADD,
+8, ASAP=10, ALAP=10"]
+"Op_10" [ fontname = "Helvetica" shape = box, label = " mul mul9 BB=for.body3 HyIns=MUL,
+10, ASAP=8, ALAP=9"]
+"Op_11" [ fontname = "Helvetica" shape = box, label = " add add11 BB=for.body3 HyIns=ADD,
+11, ASAP=9, ALAP=10"]
+"Op_26" [ fontname = "Helvetica" shape = box, label = " accum C=0x-1 C=0x-1BB=for.body3 HyIns=ACCUM,
+26, ASAP=10, ALAP=11"]
+"Op_13" [ fontname = "Helvetica" shape = box, label = " add add BB=for.body3 HyIns=ADD,
+13, ASAP=3, ALAP=3"]
+"Op_15" [ fontname = "Helvetica" shape = box, label = " add add18  C=0x2BB=for.body3 HyIns=ADD,
+15, ASAP=4, ALAP=5"]
+"Op_17" [ fontname = "Helvetica" shape = box, label = " load manupa4 BB=for.body3 HyIns=LOAD,
+17, ASAP=7, ALAP=8"]
+"Op_18" [ fontname = "Helvetica" shape = box, label = " or add5  C=0x1BB=for.body3 HyIns=OR,
+18, ASAP=4, ALAP=4"]
+"Op_20" [ fontname = "Helvetica" shape = box, label = " load manupa2 BB=for.body3 HyIns=LOAD,
+20, ASAP=7, ALAP=7"]
+"Op_21" [ fontname = "Helvetica" shape = box, label = " mul mul16 BB=for.body3 HyIns=MUL,
+21, ASAP=8, ALAP=8"]
+"Op_22" [ fontname = "Helvetica" shape = box, label = " accum add23 BB=for.body3 HyIns=ACCUM,
+22, ASAP=9, ALAP=9"]
+"Op_24" [ fontname = "Helvetica" shape = box, label = " load manupa1 BB=for.body3 HyIns=LOAD,
+24, ASAP=5, ALAP=7"]
+"Op_25" [ fontname = "Helvetica" shape = box, label = " mul mul BB=for.body3 HyIns=MUL,
+25, ASAP=6, ALAP=8"]
+
+
+
+"Op_0" -> "Op_4" [style = bold, color = black];
+"Op_0" -> "Op_13" [style = bold, color = black];
+"Op_0" -> "Op_24" [style = bold, color = black];
+"Op_4" -> "Op_6" [style = bold, color = black];
+"Op_6" -> "Op_7" [style = bold, color = black];
+"Op_6" -> "Op_10" [style = bold, color = black];
+"Op_7" -> "Op_8" [style = bold, color = black];
+"Op_8" -> "Op_22" [style = bold, color = black];
+"Op_10" -> "Op_11" [style = bold, color = black];
+"Op_11" -> "Op_26" [style = bold, color = black];
+"Op_13" -> "Op_15" [style = bold, color = black];
+"Op_13" -> "Op_18" [style = bold, color = black];
+"Op_13" -> "Op_61" [style = bold, color = black];
+"Op_15" -> "Op_17" [style = bold, color = black];
+"Op_17" -> "Op_7" [style = bold, color = black];
+"Op_18" -> "Op_20" [style = bold, color = black];
+"Op_20" -> "Op_21" [style = bold, color = black];
+"Op_20" -> "Op_10" [style = bold, color = black];
+"Op_21" -> "Op_8" [style = bold, color = black];
+"Op_24" -> "Op_21" [style = bold, color = black];
+"Op_24" -> "Op_25" [style = bold, color = black];
+"Op_25" -> "Op_11" [style = bold, color = black];
+"Op_61" -> "Op_25" [style = bold, color = black];
+}
+
