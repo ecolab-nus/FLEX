@@ -4,7 +4,7 @@ This repository contains architecture, compiler and design space exploration fra
 
 
 ## FLEX DSE Framework
-![Screenshot from 2023-08-11 15-53-30](https://github.com/ecolab-nus/FLEX/assets/5539032/b4d839d9-f2d5-4d12-a7ad-9643d1e7a94c)
+![Screenshot from 2023-08-11 15-53-30](https://github.com/ecolab-nus/FLEX/assets/5539032/80609e42-0802-4d19-8b3e-ca8f7ff74567)
 
 
 ### Directory Structure
