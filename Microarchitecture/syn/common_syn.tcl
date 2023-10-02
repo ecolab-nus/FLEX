@@ -33,8 +33,6 @@ set_db design_process_node 22
 
 ## Library search paths
 set_db lib_search_path "\
-    $::env(TECHLEF) \
-    $::env(TECHQRC) \
     $::env(TECHLIB)/model/timing/lib \
     $::env(TECHLIB)/lef \
     $::env(TARGET_GEN)/genviews-output/model/timing/lib \
@@ -47,10 +45,5 @@ set_db library "$hip_lib_list"
 ## LEF files
 set hip_lef_list "22FDSOI_7M_2Mx_4Cx_1Ix_LB_116cpp_tech.lef GF22FDX_SC7P5T_116CPP_BASE_CSC28L.lef IN22FDX_R1PV_NFVG_W00008B024M02C256.lef IN22FDX_R1PV_NFVG_W00008B028M02C256.lef IN22FDX_SDPV_NFVG_W00256B016M08C064.lef"
 set_db lef_library "$hip_lef_list"
-
-## PLE
-#set_db cap_table_file <file>
-set_db qrc_tech_file { qrcTechFile }
-set_db interconnect_mode ple
 
 

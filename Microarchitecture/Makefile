@@ -19,8 +19,6 @@ pre:
 	@mkdir -p $(TARGET_ROOT)
 	@mkdir -p $(TARGET_RTL)
 	@mkdir -p $(TARGET_GEN)
-	@bin/logbackup $(MAKELOG)
-	@bin/printc "\n* STAGE: Prebuild phase" CYAN $(LOG)
 	#Dump date and env vars into logfile
 	date $(LOG)
 	env $(LOG)
