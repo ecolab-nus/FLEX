@@ -233,10 +233,10 @@ int main(int argn, char *argc[])
 			//mapper.assignLiveInOutAddr(&tempDFG);
 			std::cout << "MappedII=" << int(II/(args.vec_size)) << "\n";
 			printf("Mapping method=%d\n",mapping_method);
-			if(PEType == "HyCUBE_4REG"){
+			//if(PEType == "HyCUBE_4REG"){
 				std::cout << "Printing HyCUBE Binary...\n";
 				mapper->printHyCUBEBinary(tempCGRA);
-			}
+			//}
 			break;
 			
 		}
