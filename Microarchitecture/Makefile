@@ -19,6 +19,9 @@ pre:
 	@mkdir -p $(TARGET_ROOT)
 	@mkdir -p $(TARGET_RTL)
 	@mkdir -p $(TARGET_GEN)
+	#Make a backup of existing log
+	@bin/logbackup $(MAKELOG)
+	@bin/printc "\n* STAGE: Prebuild phase" CYAN $(LOG)
 	#Dump date and env vars into logfile
 	date $(LOG)
 	env $(LOG)
@@ -26,7 +29,6 @@ pre:
 
 ## Generate collaterals stage
 gen: pre
-	@bin/printc "\n* STAGE: Generating RTL collaterals" CYAN $(LOG)
 	#Generate SRAM collaterals
 	export IDDK_ROOT="$(RF_COMPILER)/iddk"
 	cd $(TARGET_GEN) && $(RF_COMPILER)/bin/IN22FDX_MEM_genviews -corner 'TT 0.800 0.800 0.0 0.0 25' -macro IN22FDX_R1PV_NFVG_W00008B024M02C256 -log genviews.log
@@ -35,7 +37,7 @@ gen: pre
 
 ## RTL compile stage
 rtl: pre
-	@bin/printc "\n* STAGE: RTL compilation" CYAN $(LOG)
+	@bin/printc "\n* STAGE: RTL compilation" CYAN $(LOG)	
 	cd $(TARGET_RTL) && xrun -compile -f $(RTLFILES)/hdl.lst -work soc_lib $(LOG)
 	@bin/checklog $(MAKELOG) bin/error.lst bin/pass.lst $(LOG)
 
@@ -46,6 +48,7 @@ sim: pre rtl
 	cd $(TARGET_RTL) && xrun -elaborate -f $(TBFILES)/tb_hdl.lst -reflib soc_lib -pkgsearch test_lib -work test_lib $(LOG)
 	cd $(TARGET_RTL) && xrun -R -seed $(SEED) -input $(REPO_ROOT)/tools/wavedump.tcl +UVM_TESTNAME=$(TEST) -f $(TBFILES)/tb_hdl.lst $(LOG)
 	@bin/checklog $(MAKELOG) bin/error.lst bin/pass.lst $(LOG)
+
 
 ## RTL synthesis stage
 syn: pre
@@ -61,4 +64,8 @@ power: pre
 	cd $(TARGET_PWR) && joules -batch -common_ui -f $(REPO_ROOT)/tools/run_joules_flex_generic_16_3_28.tcl $(LOG)
 	@bin/checklog $(MAKELOG) bin/error.lst bin/pass.lst $(LOG)
 
+## RTL debug
+debug:
+	@bin/printc "\n* STAGE: Simulation debug" CYAN
+	cd $(TARGET_RTL) && simvision $(WAVE).shm
 

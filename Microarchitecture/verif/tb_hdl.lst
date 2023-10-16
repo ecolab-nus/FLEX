@@ -1,40 +1,17 @@
-// Copyright (C) A*STAR - All Rights Reserved
-// Unauthorized copying of this file, via any medium is strictly prohibited
-// Proprietary and confidential
-// Written by Vishnu Paramasivam <vishnu_paramasivam@ime.a-star.edu.sg>, May 2019
-// Description: RTL options and file list for simulation. Add/remove env paths vars in bin/makepaths instead of hardcoding here.
-// Usage: -y elaborates all RTL in dir, -incdir is for #include<> inside RTLs, -v for a single RTL file
 
 // Simulator options (dont touch if unsure)
 +libext+.v+.sv+.vh+.vams -default_ext systemverilog -ieee1364 -gateloopwarn $(XPROP_SW) $(COVOPTS) $(SIMOPTS)
 -timescale 1ns/1ps -compcnfg -assert -access +c -uvm -nowarn FUNTSK
 
-// Enable RTL defines parsing info for review (should be disabled by default)
-//-parseinfo ifxdef
-
-// Top level RTL defines (this method is not recommended)
-//+define+ARM_UD_MODEL //Force functional model with no timing checks (SRAM and ARM STD cells)
-//+define+NO_SDTC //Disable ARM SRAM back-annotation
-//+define+FPGA
-
 // TB files
 $(TBFILES)/$(TBTOP)/$(TEST).sv
-//$(TBCOMMON)/tb_config.sv
 
 // RTL files
 -y $(TARGET_GEN)
--y $(CWPATH)
 -incdir $(RTLFILES)
 -incdir $(TBFILES)/$(TBTOP)
 -incdir $(TBCOMMON)
 -v $(TECHLIB)/verilog/sc12mc_l40lp_base_ulvt_c50.v
 -v $(IOPADLIB)/FrontEnd/verilog/foh0l_prs25_tmvh33l18_generic_io_30.lib.src
 
-// UPF files (top level only)
-//-lps_1801 $(RTLFILES)/upf/generic.upf
-//-lps_syntax_check
-
-// Enable for postlayout simulation, add netlists and edit the sdf.cmd file as needed
-//-sdf_cmd_file $(REPO_ROOT)/tools/sdf.cmd -sdf_verbose -ALLOWREDEFINITION
-//-v $(REPO_ROOT)/subip/fftmain_without_pg.v
 

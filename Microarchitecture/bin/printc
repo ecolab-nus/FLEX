@@ -1,0 +1,40 @@
+#!/bin/bash
+## Copyright (C) A*STAR - All Rights Reserved
+## Unauthorized copying of this file, via any medium is strictly prohibited
+## Proprietary and confidential
+## Written by Vishnu Paramasivam <vishnu_paramasivam@ime.a-star.edu.sg>, January 2018
+## Description: Simple script to print colored text during builds.
+## Usage example: bin/printc "Hello World" GREEN
+
+## Colors for status messages
+GREEN=$(tput setaf 2)   ## Pass
+RED=$(tput setaf 1)     ## Fail
+YELLOW=$(tput setaf 3)  ## Warning
+CYAN=$(tput setaf 6)    ## Status
+NORMAL=$(tput sgr0)     ## Default
+
+## Conditions and args
+if [ -z $2 ]
+then
+    echo "$1"
+
+elif [ $2 = "GREEN" ]
+then
+    echo -e "${GREEN}$1${NORMAL}"
+
+elif [ $2 = "RED" ]
+then
+    echo -e "${RED}$1${NORMAL}"
+
+elif [ $2 = "CYAN" ]
+then
+    echo -e "${CYAN}$1${NORMAL}"
+
+elif [ $2 = "YELLOW" ]
+then
+    echo -e "${YELLOW}$1${NORMAL}"
+
+else #"CYAN" (status)
+    echo -e "${CYAN}$1${NORMAL}"
+fi
+

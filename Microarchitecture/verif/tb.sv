@@ -6,9 +6,7 @@
 `define TB_NUM_CMEM_INST 128
 
 `include "tb_defines.vh"
-`include "globals_top.vh"
-`include "uvm_macros.svh"
-`include "qspi_rw_task.svh"
+//`include "qspi_rw_task.svh"
 `include "pace_rw_task.svh"
 `include "tb_driver.svh"
 
@@ -27,7 +25,6 @@ tb_driver tb_driver();
 //------------------------------------------------------------------------------
 // Simulation signals / registers
 //------------------------------------------------------------------------------
-logic [`QSPI_DATA_WIDTH-1:0] val1, val2;
 integer num_sim_cycles = `TB_NUM_SIM_CYCLES;
 event initial_signals;
 event start_stimulus;
@@ -36,7 +33,6 @@ bit marker_reg = 0;
 // Used to view expected results (results_expected.trc) in waveform
 wire [15:0] dmem_expected;
 assign dmem_expected = memory_dataSRAM_expected[num_inst];
-//wire [3:0] trigger [3:0];
 //------------------------------------------------------------------------------
 // Initial values
 //------------------------------------------------------------------------------
@@ -54,14 +50,9 @@ initial begin: simulation_control_flow
     initialize_testbench("$REPO_ROOT/verif/flex_fir_4x4_2/totaldata.trc",
                          "$REPO_ROOT/verif/flex_fir_4x4_2/totaladdr.trc",
                          "$REPO_ROOT/verif/flex_fir_4x4_2/results_expected.trc");
-    //$set_toggle_region(hycube8x8_app_testbench.testbench_dut);
 
-//vishnup TODO: Temp force, replace with global tasks
-`ifdef QSPI_TEST_ENABLE
-    force `SOC_TOP.hycube0.scan_start_exec = scan_start_exec;
-    force exec_end = `SOC_TOP.hycube0.exec_end;
-`else
-    force `SOC_TOP.hycube0.data_in = data_in;
+
+    /*force `SOC_TOP.hycube0.data_in = data_in;
     force `SOC_TOP.hycube0.address_in = address_in;
     force `SOC_TOP.hycube0.data_addr_valid = data_addr_valid;
     force `SOC_TOP.hycube0.scan_start_exec = scan_start_exec;
@@ -69,17 +60,12 @@ initial begin: simulation_control_flow
     force `SOC_TOP.hycube0.trigger_op = trigger;
     force data_out_valid = `SOC_TOP.hycube0.data_out_valid;
     force data_out = `SOC_TOP.hycube0.data_out;
-    force exec_end = `SOC_TOP.hycube0.exec_end;
-`endif
+    force exec_end = `SOC_TOP.hycube0.exec_end;*/
+
 
     -> initial_signals;
 
     wait (tb_driver.rst_seq_done); //Wait for reset sequence to complete
-
-    // Enable hycube chip (reset, chip_en)
-    #(`SYS_CLK_PERIOD*10);
-    qspi_unlock(`QSPI_PACE_ID, 12); // Unlock QSPI ctrl
-    qspi_write(20'h80000, 16'h0110); // Enable hycube (reg0)
 
     // Print instance
     #(`SYS_CLK_PERIOD*10);

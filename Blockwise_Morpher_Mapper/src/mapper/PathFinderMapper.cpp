@@ -6836,7 +6836,7 @@ void CGRAXMLCompile::PathFinderMapper::printBinFileIter(
 	binFile << "TILEEN=";
 	for(int y = cgra->get_y_max()-1 ; y >= 0 ; y--){
 		for(int x = cgra->get_x_max()-1 ; x >= 0  ; x--){
-			printf("Y=%d X=%d clken=%d\n",y,x,peEnable[y][x]);
+			//printf("Y=%d X=%d clken=%d\n",y,x,peEnable[y][x]);
 			if(peEnable[y][x])
 			{
 				binFile << "1";
@@ -6852,7 +6852,7 @@ void CGRAXMLCompile::PathFinderMapper::printBinFileIter(
 	binFile << "CMEMOPEN=";
 	for(int y = cgra->get_y_max()-1 ; y >= 0 ; y--){
 		for(int x = cgra->get_x_max()-1 ; x >= 0  ; x--){
-			printf("Y=%d X=%d clken_op=%d\n",y,x,configOPEnable[y][x]);
+			//printf("Y=%d X=%d clken_op=%d\n",y,x,configOPEnable[y][x]);
 			if(configOPEnable[y][x])
 			{
 				binFile << "1";

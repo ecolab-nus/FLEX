@@ -1,0 +1,27 @@
+#!/bin/bash
+## Copyright (C) A*STAR - All Rights Reserved
+## Unauthorized copying of this file, via any medium is strictly prohibited
+## Proprietary and confidential
+## Written by Vishnu Paramasivam <vishnu_paramasivam@ime.a-star.edu.sg>, July 2019
+## Description: Simple script to check logs for errors with negation (pass list)
+##              using extended (grep -E) regular expressions.
+## Usage: checklog $LOG_FILE $ERRORLIST_FILE $PASSLIST_FILE
+
+## Search for errors in log
+ERROR_COUNT=$(grep -E -f $2 $1 | grep -E -v -f $3 | sort -u | wc -l)
+
+## Set exit code and send message about failure
+if [ $ERROR_COUNT -gt 0 ]
+then
+    $REPO_ROOT/bin/printc "* STAGE: $ERROR_COUNT error(s) found:" RED
+    #Dump errors into a temp log, also avoids race condition with logging mechanism
+    grep -E -f $2 $1 | grep -E -v -f $3 | sort -u > .error_log.tmp
+    cat .error_log.tmp
+    rm -f .error_log.tmp
+    $REPO_ROOT/bin/printc "* STAGE: Fail" RED
+    exit 1
+else
+    $REPO_ROOT/bin/printc "* STAGE: Pass" GREEN
+    exit 0
+fi
+

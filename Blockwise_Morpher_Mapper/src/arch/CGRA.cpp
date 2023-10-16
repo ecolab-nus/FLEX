@@ -596,7 +596,7 @@ Module *CGRAXMLCompile::CGRA::ParseModule(json &module_desc, Module *parent, str
 		{
 			Port *dest_p = ret->getJSONPort(dest, false);
 			ret->insertConnection(src_p, dest_p);
-			std::cout << "Connections = " << src_p->getName() << " -> " << dest_p->getName() << "\n";
+			//std::cout << "Connections = " << src_p->getName() << " -> " << dest_p->getName() << "\n";
 		}
 	}
 

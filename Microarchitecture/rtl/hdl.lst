@@ -1,4 +1,5 @@
-// Simulator options +libext+.v+.sv+.vh+.vams -default_ext systemverilog -ieee1364 -gateloopwarn $(XPROP_SW) $(COVOPTS) $(SIMOPTS)
+// Simulator options 
++libext+.v+.sv+.vh+.vams -default_ext systemverilog -ieee1364 -gateloopwarn $(XPROP_SW) $(COVOPTS) $(SIMOPTS)
 -timescale 1ns/1ps -compcnfg -assert -access +c -uvm -nowarn FUNTSK
 
 // TB files
@@ -6,9 +7,7 @@ $(TBFILES)/$(TBTOP)/$(TEST).sv
 
 // RTL files
 $(RTLFILES)/ff_rst.sv
-$(RTLFILES)/soc_pad.sv
-$(RTLFILES)/globals_top.vh
-$(RTLFILES)/clkgen.sv
+//$(RTLFILES)/globals_top.vh
 $(RTLFILES)/encoder_onehot.sv
 $(RTLFILES)/flex.sv
 $(RTLFILES)/router.sv
@@ -26,7 +25,6 @@ $(TARGET_GEN)/genviews-output/model/verilog/IN22FDX_SDPV_NFVG_W00256B016M08C064.
 $(TARGET_GEN)/genviews-output/model/verilog/submod/sdp_memory_generic.v //TODO: Please select the verilog file for your memory
 $(TARGET_GEN)/genviews-output/model/verilog/submod/r1ph_memory_generic.v //TODO: Please select the verilog file for your memory
 -y $(TARGET_GEN)
--y $(CWPATH)
 -incdir $(RTLFILES)
 -incdir $(TBFILES)/$(TBTOP)
 -incdir $(TBCOMMON)

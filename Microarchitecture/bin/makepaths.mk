@@ -17,7 +17,7 @@ export TARGET_PWR  = $(TARGET_ROOT)/joules
 
 ## Build variables/switches
 export UNIT    = flex
-export TBTOP   = pace_orig_test
+export TBTOP   = fir_1
 export TEST    = $(TBTOP)
 
 ## Logging variables

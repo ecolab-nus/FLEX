@@ -1,0 +1,15 @@
+^make\[.*\]\:.* Error
+command not found
+\*E,
+\*F,
+^fatal
+^Fatal
+^Error
+^\[.*\]\s{2,}Error
+Error\ exit
+Error\:
+ERROR\:
+FAIL\:
+VIOLATION
+UVM_ERROR.*@
+UVM_FATAL.*@

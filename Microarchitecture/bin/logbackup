@@ -1,0 +1,15 @@
+#!/bin/bash
+## Copyright (C) A*STAR - All Rights Reserved
+## Unauthorized copying of this file, via any medium is strictly prohibited
+## Proprietary and confidential
+## Written by Vishnu Paramasivam <vishnu_paramasivam@ime.a-star.edu.sg>, January 2018
+## Description: Simple script to create a backup of any logfile
+## Usage: Input is the logfile, disable this script by defining the $DISABLE_LOGBACKUP env variable
+
+## Conditions and args
+if [ -z "$DISABLE_LOGBACKUP" ]; then
+    if [ -f $1 ]; then
+        mv -f $1 $1.bak$(ls -a "$1"* | wc -l)
+    fi
+fi
+

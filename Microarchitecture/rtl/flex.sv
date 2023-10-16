@@ -1,3 +1,5 @@
+`include "globals_top.vh"
+
 module flex(
     clk,
     clkn,
