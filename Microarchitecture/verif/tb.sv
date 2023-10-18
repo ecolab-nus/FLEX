@@ -6,10 +6,9 @@
 `define TB_NUM_CMEM_INST 128
 
 `include "tb_defines.vh"
-//`include "qspi_rw_task.svh"
 `include "pace_rw_task.svh"
 `include "tb_driver.svh"
-
+`include "$TBTOP.svh"
 module tb_top();
 
 //------------------------------------------------------------------------------
@@ -47,20 +46,9 @@ end
 // Simulation control flow
 //------------------------------------------------------------------------------
 initial begin: simulation_control_flow
-    initialize_testbench("$REPO_ROOT/verif/flex_fir_4x4_2/totaldata.trc",
-                         "$REPO_ROOT/verif/flex_fir_4x4_2/totaladdr.trc",
-                         "$REPO_ROOT/verif/flex_fir_4x4_2/results_expected.trc");
-
-
-    /*force `SOC_TOP.hycube0.data_in = data_in;
-    force `SOC_TOP.hycube0.address_in = address_in;
-    force `SOC_TOP.hycube0.data_addr_valid = data_addr_valid;
-    force `SOC_TOP.hycube0.scan_start_exec = scan_start_exec;
-    force `SOC_TOP.hycube0.read_write = read_write;
-    force `SOC_TOP.hycube0.trigger_op = trigger;
-    force data_out_valid = `SOC_TOP.hycube0.data_out_valid;
-    force data_out = `SOC_TOP.hycube0.data_out;
-    force exec_end = `SOC_TOP.hycube0.exec_end;*/
+    initialize_testbench("$REPO_ROOT/verif/$TBTOP/totaldata.trc",
+                         "$REPO_ROOT/verif/$TBTOP/totaladdr.trc",
+                         "$REPO_ROOT/verif/$TBTOP/results_expected.trc");
 
 
     -> initial_signals;
@@ -80,17 +68,7 @@ initial begin: simulation_control_flow
 
     #(`SYS_CLK_PERIOD*10);
     scan_start_exec = 1'b1;
-    #(`SYS_CLK_PERIOD) 
-    trigger[0]=4'b0100;
-    trigger[1]=4'b0111;
-    trigger[2]=4'b1001;
-    trigger[3]=4'b1111;
-
-    #(`SYS_CLK_PERIOD) 
-    trigger[0]=4'b1111;
-    trigger[1]=4'b1111;
-    trigger[2]=4'b1111;
-    trigger[3]=4'b1111;
+    enable_trig;
 
 
     $display("[%16d] ASK : START EXEC\n", $realtime);

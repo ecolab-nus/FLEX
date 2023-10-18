@@ -25,14 +25,27 @@ def run_dse_mapper(dfg_name,v,initII,maxII):
     os.chdir(MICROARCHITECTURE_HOME+'/verif')
     os.system('rm -rf '+dfg_name+'_'+str(v))
     os.system('mkdir '+dfg_name+'_'+str(v))
-    os.system('mv *.bin '+dfg_name+'_'+str(v))
+    os.system('mv *.bin binary.bin')
     print('Mapped with II='+str(currII))
     return currII
 
 
-#def run_dse_power(dfg_name,v):
-#    os.chdir(MICROARCHITECTURE_HOME+'/'+dfg_name)
+def run_dse_power(dfg_name,v,currII):
+    os.chdir(MICROARCHITECTURE_HOME+'/verif/'+dfg_name+'_'+str(v))
+    BT.generate_mem(1024)
+    BT.dump_trace_full("binary.bin","data_dm.txt",currII)
+    os.system('cp ../tb.sv '+dfg_name+'_'+str(v)+".sv")
 
+    if v==1:
+        BT.dump_include(dfg_name,"totaladdr.trc",currII,8,2,256,4,16)
+    else:
+        BT.dump_include_with_trigger(v,dfg_name,"binary.bin","totaladdr.trc",currII,8,2,256,4,16)
+
+    os.chdir(MICROARCHITECTURE_HOME)
+    os.system('make sim UNIT=flex TBTOP='+dfg_name+'_'+str(v))
+    os.system('make power UNIT=flex TBTOP='+dfg_name+'_'+str(v))
+
+        
 def main():
     print(r"""
     ###------  FLEX DESIGN SPACE EXPLORATION ------###

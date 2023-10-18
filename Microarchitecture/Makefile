@@ -1,5 +1,3 @@
-
-
 ## Primary include file(s)
 include bin/makepaths.mk
 
@@ -8,7 +6,7 @@ include bin/makepaths.mk
 #####################################
 
 ## Must make all stages phony to ensure proper execution
-.PHONY: all clean temp list rtl pre gen syn power sim
+.PHONY: all clean temp list rtl pre gen syn power sim debug
 
 ## Primary build stage (build all)
 all: pre gen rtl

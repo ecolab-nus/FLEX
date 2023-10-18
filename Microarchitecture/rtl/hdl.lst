@@ -7,7 +7,7 @@ $(TBFILES)/$(TBTOP)/$(TEST).sv
 
 // RTL files
 $(RTLFILES)/ff_rst.sv
-//$(RTLFILES)/globals_top.vh
+$(RTLFILES)/soc_pad.sv
 $(RTLFILES)/encoder_onehot.sv
 $(RTLFILES)/flex.sv
 $(RTLFILES)/router.sv
@@ -28,4 +28,6 @@ $(TARGET_GEN)/genviews-output/model/verilog/submod/r1ph_memory_generic.v //TODO:
 -incdir $(RTLFILES)
 -incdir $(TBFILES)/$(TBTOP)
 -incdir $(TBCOMMON)
--v $(TECHLIB)/model/verilog/GF22FDX_SC7P5T_116CPP_BASE_CSC28L.v //TODO: Please select the correct techlib for your PDKs
+-v $(TECHLIB)/model/verilog/GF22FDX_SC7P5T_116CPP_BASE_CSC28L.v 
+-v $(IOPADLIB)/FrontEnd/verilog/foh0l_prs25_tmvh33l18_generic_io_30.lib.src
+//TODO: Please select the correct techlib for your PDKs
