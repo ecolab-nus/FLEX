@@ -66,7 +66,7 @@ def generate_cm_data_addr(ins_inp, TIMEEXEC):
 
     cm_addr_file.close()
     
-def generate_local_data_addr(ins_inp, TIMEEXEC):
+def generate_local_data_addr(local_inp, TIMEEXEC):
     num_inst_per_tile = 0
     for i in range(FLEX.TILES_NUM_ROWS):
         for j in range(FLEX.TILES_NUM_COLS):
@@ -210,8 +210,8 @@ def generate_trigger_data_addr(ins_inp, TIMEEXEC):
         for j in range(FLEX.TILES_NUM_COLS):
             tile_num = (i*FLEX.TILES_NUM_ROWS) + j
             cmdtorun = cmdtorun + "./mem_files/tile" + str(tile_num) + "_trigger.trc "
-            cmdtorun = cmdtorun + "> ./mem_files/trigger.trc"
-            os.system(cmdtorun)
+    cmdtorun = cmdtorun + "> ./mem_files/trigger.trc"
+    os.system(cmdtorun)
 
     if(FLEX.WRITE_CM):
         addr_mem_type = FLEX.ADDR_MEM_TYPE_ENCODING["TRIGGER"]
@@ -266,8 +266,8 @@ def generate_clken_data_addr(ins_inp, TIMEEXEC):
         cm_addr_clken_file.write(totaladdress + "\n")
 
     cm_addr_clken_file.close()
-def string_to
-def generate__data_addr(ins_inp, TIMEEXEC):
+
+def generate__data_addr(vec_size, ins_inp, TIMEEXEC):
     os.system("grep " + "\"LOOP_START_END\"" + " " + ins_inp+ " > ./mem_files/loopstart_data.trc\nsed -i \'s/LOOP_START_END=//\' ./mem_files/loopstart_data.trc")
     os.system("grep " + "\"ITER\"" + " " + ins_inp+ " > ./mem_files/iter_data.trc\nsed -i \'s/ITER=//\' ./mem_files/iter_data.trc")
     os.system("grep " + "\"TILEEN\"" + " " + ins_inp+ " > ./mem_files/clken_data.trc\nsed -i \'s/TILEEN=//\' ./mem_files/clken_data.trc")
@@ -292,11 +292,12 @@ def generate__data_addr(ins_inp, TIMEEXEC):
     totaldata = open("totaldata.trc","a+")
     totaladdr = open("totaladdr.trc","a+")
 
-    totaldata.write(loopstart_data+'\n')
-    totaldata.write(iter_data[-17:]+"00000000000000"+iter_data[:-17]+"\n")
+    totaldata.write(loopstart_data)
+    totaldata.write(iter_data[-17:])
+    totaldata.write("00000000000000"+iter_data[:-17]+'\n')
     totaldata.write(clken_data)
     totaldata.write(clken_op_data)
-    totaldata.write(vec_size)
+    totaldata.write('{0:016b}'.format(vec_size))
     totaldata.write("\n")
 
     totaladdr.write("1100000000000000000\n")
@@ -309,17 +310,23 @@ def generate__data_addr(ins_inp, TIMEEXEC):
     totaldata.close()
 
 
-def dump_trace_full(ins_inp,data_inp,TIMEEXEC):
+def dump_trace_full(vec_size, ins_inp,data_inp,local_inp,TIMEEXEC):
     generate_cm_data_addr(ins_inp, TIMEEXEC)
     generate_dm_data_addr(data_inp, TIMEEXEC)
-    generate_local_data_addr(ins_inp, TIMEEXEC)
-    generate_trigger_data_addr(ins_inp, TIMEEXEC)
+    generate_local_data_addr(local_inp, TIMEEXEC)
     generate_clken_data_addr(ins_inp, TIMEEXEC)
 
-    os.system("cat ./mem_files/ins.trc ./mem_files/data.trc ./mem_files/local.trc ./mem_files/trigger.trc ./mem_files/clkenop.trc ./mem_files/clkenr.trc > totaldata.trc")
-    os.system("cat ./mem_files/addr_ins.trc ./mem_files/addr_data.trc ./mem_files/addr_local.trc ./mem_files/addr_trig.trc ./mem_files/addr_clken.trc> totaladdr.trc")
+    if(vec_size > 1):
+        generate_trigger_data_addr(ins_inp, TIMEEXEC)
 
-    generate__data_addr(ins_inp, TIMEEXEC)
+        os.system("cat ./mem_files/ins.trc ./mem_files/data.trc ./mem_files/local.trc ./mem_files/trigger.trc ./mem_files/clkenop.trc ./mem_files/clkenr.trc > totaldata.trc")
+        os.system("cat ./mem_files/addr_ins.trc ./mem_files/addr_data.trc ./mem_files/addr_local.trc ./mem_files/addr_trig.trc ./mem_files/addr_clken.trc> totaladdr.trc")
+    else:
+        os.system("cat ./mem_files/ins.trc ./mem_files/data.trc ./mem_files/local.trc ./mem_files/clkenop.trc ./mem_files/clkenr.trc > totaldata.trc")
+        os.system("cat ./mem_files/addr_ins.trc ./mem_files/addr_data.trc ./mem_files/addr_local.trc ./mem_files/addr_clken.trc> totaladdr.trc")
+
+
+    generate__data_addr(vec_size, ins_inp, TIMEEXEC)
 
 def dump_include_with_trigger(vec_size, dfgname,ins_inp,totaladdr,mappedII, CM_WIDTH_BYTES, DM_WIDTH_BYTES, DM_DEPTH, NUM_DM, PE_SIZE):
     with open(totaladdr, 'r') as fp:
@@ -330,32 +337,52 @@ def dump_include_with_trigger(vec_size, dfgname,ins_inp,totaladdr,mappedII, CM_W
 
     trig_arr=[]
     for i in range(FLEX.TILES_NUM_ROWS):
+        trig_arr_row=[]
         for j in range(FLEX.TILES_NUM_COLS):
             tile_num = (i*FLEX.TILES_NUM_ROWS) + j
-            os.system("grep -i \"\[OPERATION TRIGGER\] Y=" + str(i) + " " + "X=" + str(j) + "\" " + ins_inp + " | sed 's/:/\n/g'" + " >" + " ./mem_files/trig_" + str(tile_num) + ".trc")
-            with open(" ./mem_files/trig_" + str(tile_num) + ".trc", 'r') as f1:
-                trig = f1.readlines()
+            os.system("grep -i \"\[OPERATION TRIGGER\] Y=" + str(i) + " " + "X=" + str(j) + "\" " + ins_inp + " | cut -d ':' -f 2" + " >" + " ./mem_files/trig_" + str(tile_num) + ".trc")
 
-            for v in range(1,vec_size):
-                if int(trig, 2) == v-1:
-                    trig_arr[i][v-1]= '1'+trig_arr[v-1]
-                else
-                    trig_arr[i][v-1]= '0'+trig_arr[v-1]
+    trig_arr = []
+    for v in range(1,vec_size+1):
+        trig_row = []
+        for i in range(FLEX.TILES_NUM_ROWS):
+            trig_col=""
+            for j in range(FLEX.TILES_NUM_COLS):
+                tile_num = (i*FLEX.TILES_NUM_ROWS) + j
 
-    filename = dfgname+'_'+str(v)+".svh"
+                with open("./mem_files/trig_" + str(tile_num) + ".trc", 'r') as f1:
+                    trig = f1.readlines()
+
+                if int(trig[0], 2) <= v-1:
+                    trig_col= '1'+trig_col
+                else:
+                    trig_col= '0'+trig_col
+            trig_row.append(trig_col)
+        trig_arr.append(trig_row)
+
+    filename = dfgname+'_'+str(vec_size)+"_def.svh"
 
     f =open(filename, "a")
-    f.write("`define TB_NUM_INST"+lines)
-    f.write("`define TB_NUM_DMEM_INST"+dm_inst)
-    f.write("`define TB_NUM_CMEM_INST"+cm_inst)
+    f.write("`define TB_NUM_INST "+str(lines)+'\n')
+    f.write("`define TB_NUM_DMEM_INST "+str(dm_inst)+'\n')
+    f.write("`define TB_NUM_CMEM_INST "+str(cm_inst)+'\n')
     
     f.write("\n")
-    f.write("task enable_trig;")
+    f.close()
 
-    for v in range(1,vec_size):
-        f.write("#(`SYS_CLK_PERIOD);")        
+    filename = dfgname+'_'+str(vec_size)+"_trig.svh"
+
+    f =open(filename, "a")
+
+    f.write("task enable_trig;\n")
+
+    for v in range(1,vec_size+1):
+        f.write("@(posedge `HYC_TOP.clk);\n")        
         for i in range(FLEX.TILES_NUM_ROWS):
-            f.write("trigger\["+str(i)+"\]="+str(FLEX.TILES_NUM_ROWS)+"'b"+trig_arr[i][v-1]+";") 
+            f.write("trigger["+str(i)+"]="+str(FLEX.TILES_NUM_ROWS)+"'b"+trig_arr[v-1][i]+";\n") 
+   
+    f.write("\nendtask\n")
+            
     f.close()
 
 def dump_include(dfgname,totaladdr,mappedII, CM_WIDTH_BYTES, DM_WIDTH_BYTES, DM_DEPTH, NUM_DM, PE_SIZE):
@@ -365,19 +392,30 @@ def dump_include(dfgname,totaladdr,mappedII, CM_WIDTH_BYTES, DM_WIDTH_BYTES, DM_
     cm_inst = CM_WIDTH_BYTES*mappedII*PE_SIZE
     dm_inst = DM_WIDTH_BYTES*DM_DEPTH*NUM_DM
 
-    filename = dfgname+'_'+str(v)+".svh"
+    filename = dfgname+'_1_def.svh'
 
     f =open(filename, "a")
-    f.write("`define TB_NUM_INST"+lines)
-    f.write("`define TB_NUM_DMEM_INST"+dm_inst)
-    f.write("`define TB_NUM_CMEM_INST"+cm_inst)
+    f.write("`define TB_NUM_INST "+str(lines)+'\n')
+    f.write("`define TB_NUM_DMEM_INST "+str(dm_inst)+'\n')
+    f.write("`define TB_NUM_CMEM_INST "+str(cm_inst)+'\n')
+
+    f.write("\n")
+    f.close()
+
+    filename = dfgname+'_1_trig.svh'
+
+    f =open(filename, "a")
+    
+    f.write("task enable_trig;\n")    
+    f.write("@(posedge `HYC_TOP.clk);")
+    f.write("\nendtask\n")
     
     f.close()
 
 def generate_mem(size):
     data_dm_file = open("data_dm.txt","w+")
 
-    for i in range(MEM_SIZE):
+    for i in range(size):
         data_val = str(i)+","+str(i%10)+","+str(i%10)+"\n"
         data_dm_file.write(data_val)
 

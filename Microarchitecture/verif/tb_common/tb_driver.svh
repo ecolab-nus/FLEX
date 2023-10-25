@@ -17,10 +17,10 @@
 module tb_driver ();
     logic                        clk;
     logic                        rstn; 
-    logic [5:0]                  cfg_sel; 
+    /*logic [5:0]                  cfg_sel; 
     logic                        spi_ss;
     logic                        spi_sclk;
-    wire  [3:0]                  spi_data;
+    wire  [3:0]                  spi_data;*/
 
     //Reset sequence completion signal
     logic rst_seq_done;

@@ -59,7 +59,7 @@ syn: pre
 power: pre
 	@bin/printc "\n* STAGE: Compute power" CYAN $(LOG)
 	mkdir -p $(TARGET_PWR) $(LOG)
-	cd $(TARGET_PWR) && joules -batch -common_ui -f $(REPO_ROOT)/tools/run_joules_flex_generic_16_3_28.tcl $(LOG)
+	cd $(TARGET_PWR) && joules -batch -common_ui -f $(REPO_ROOT)/tools/run_joules.tcl $(LOG)
 	@bin/checklog $(MAKELOG) bin/error.lst bin/pass.lst $(LOG)
 
 ## RTL debug

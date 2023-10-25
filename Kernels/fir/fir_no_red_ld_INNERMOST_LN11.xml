@@ -24,7 +24,8 @@
 	<BB2 name="for.body3_29_0"/>
 </BB1>
 </MutexBB>
-<ITER>
+<ITER
+	stride="1" max_count="32">
 </ITER>
  <DFG count="18">
 

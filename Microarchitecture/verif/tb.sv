@@ -1,14 +1,9 @@
 // Simulation precision
 `timescale 1 ns / 1 ps
-
-`define TB_NUM_INST 1306
-`define TB_NUM_DMEM_INST 1024
-`define TB_NUM_CMEM_INST 128
-
 `include "tb_defines.vh"
 `include "pace_rw_task.svh"
 `include "tb_driver.svh"
-`include "$TBTOP.svh"
+
 module tb_top();
 
 //------------------------------------------------------------------------------

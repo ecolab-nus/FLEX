@@ -6,7 +6,7 @@ set_units -time 1000.0ps
 
 ## Clock parameters
 set clk_period                 10 
-set clk_uncertainty            0.25
+set clk_uncertainty            0.2
 
 ## Primary clock pin (clk)
 if {[llength [get_pins clk -quiet]]} {
@@ -35,10 +35,10 @@ if {[llength [get_clocks clk -quiet]]} {
 }
 
 ## IO delays - General
-set_input_delay  -clock clk [expr $clk_period * 0.2] -max [all_inputs]
-set_input_delay  -clock clk [expr $clk_period * 0.1] -min [all_inputs]
-set_output_delay -clock clk [expr $clk_period * 0.2] -max [all_outputs]
-set_output_delay -clock clk [expr $clk_period * 0.1] -min [all_outputs]
+set_input_delay  -clock clk [expr $clk_period * 0.15] -max [all_inputs]
+set_input_delay  -clock clk [expr $clk_period * 0.05] -min [all_inputs]
+set_output_delay -clock clk [expr $clk_period * 0.15] -max [all_outputs]
+set_output_delay -clock clk [expr $clk_period * 0.05] -min [all_outputs]
 
 ## IO delays - Crossbar
 set_input_delay  -clock clk [expr $clk_period * 0.45] -max [get_ports [list data_in*]]

@@ -6650,9 +6650,9 @@ void CGRAXMLCompile::PathFinderMapper::printBinFile(
 				}else
 				{
 					if(insString_operation[t].length() > 21)
-						binFile << "00000" << insString_operation[t] +insString_routing_N[t]+insString_routing_W[t]+insString_routing_S[t]+insString_routing_E[t] << "\n";
+						binFile << "0000000000" << insString_operation[t] +insString_routing_N[t]+insString_routing_W[t]+insString_routing_S[t]+insString_routing_E[t] << "\n";
 					else
-						binFile << "0000000" << insString_operation[t] + insString_routing_N[t]+insString_routing_W[t]+insString_routing_S[t]+insString_routing_E[t] << "\n";
+						binFile << "000000000000" << insString_operation[t] + insString_routing_N[t]+insString_routing_W[t]+insString_routing_S[t]+insString_routing_E[t] << "\n";
 				}
 				std::cout << "t=" << t << " operation=" << insString_operation[t] << " N=" << insString_routing_N[t] << " W=" << insString_routing_W[t] << " S=" << insString_routing_S[t] << " E=" << insString_routing_E[t] << "\n";
 
@@ -6704,6 +6704,29 @@ void CGRAXMLCompile::PathFinderMapper::printBinFile(
 		binFile << "\n";
 	}
 	}
+	else
+	{
+		binFile << "\n";
+		binFile << "[CMEMROUTEEN]\n";
+		for(int t = 0;t< t_max/this->cgra->vec_size + 1 ;  t++){
+			binFile << "[CMEMROUTEEN] T=" << t << " :";
+
+			for(int y = cgra->get_y_max()-1 ; y >= 0 ; y--){
+				for(int x = cgra->get_x_max()-1 ; x >= 0  ; x--){
+					if(configRouteEnable[t][y][x])
+					{
+						binFile << "1";
+					}
+					else
+					{
+						binFile << "0";
+					}
+				}
+			}
+			binFile << "\n";
+		}
+		binFile << "\n";
+	}
 	if(this->cgra->vec_size > 1)
 	{
 	binFile << "\n";
@@ -6737,7 +6760,7 @@ void CGRAXMLCompile::PathFinderMapper::printBinFile(
 			for(int y = cgra->get_y_max()-1 ; y >= 0 ; y--){
 				for(int x = cgra->get_x_max()-1 ; x >= 0  ; x--){
 					//std::cout << " T=" << t << " X=" << x <<" Y=" << y <<" EN=" << configOPEnableCycle[t][y][x]  << " " << configRouteEnable[t][y][x]  << "->"<<(configOPEnableCycle[t][y][x] && configRouteEnable[t][y][x])<< "\n";
-					if(configOPEnableCycle[t][y][x] || configRouteEnable[t][y][x])
+					if(configOPEnableCycle[t][y][x])
 					{
 						binFile << "1";
 					}

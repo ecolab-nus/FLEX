@@ -36,7 +36,7 @@ WRITE_CLUS_EN = True
 # Bit Widths
 DATA_WIDTH = 16
 DM_WIDTH = 16
-CM_WIDTH = 64
+CM_WIDTH = 48
 
 CM_BYTE_SEL_BITS = 2 # 
 CM_ROW_SEL_BITS = CM_DEPTH.bit_length()-1 # log2(CM_DEPTH)
