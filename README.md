@@ -46,8 +46,9 @@ Please update all the tool scripts in the [`Microarchitecture/`](Microarchitectu
     ./install.sh
 
 #### Run example DSE
-python3 run_flex_dse.py <`Kernel name`> <`Max vector size supported by kernel`> <`Max vector size supported by hardware`>
-    python3 run_flex_dse.py fir 32 8
+python run_flex_dse.py <`Kernel name`> <`Max vector size supported by kernel`> <`Max vector size supported by hardware`>
+    
+    python run_flex_dse.py fir 32 8
     
 
 # Citation
