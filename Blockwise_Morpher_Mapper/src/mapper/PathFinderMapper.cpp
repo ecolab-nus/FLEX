@@ -1771,8 +1771,8 @@ int CGRAXMLCompile::PathFinderMapper::calculateCost(LatPort src,
 	assert(srcPE);
 	PE *nextPE = next_to_src.second->findParentPE();
 	assert(nextPE);
-	//int distance = abs(nextPE->Y - srcPE->Y) + abs(nextPE->X - srcPE->X);
-	int distance = abs(nextPE->Y - srcPE->Y) + abs(nextPE->X - srcPE->X) + regDiscourageFactor * ((nextPE->T - srcPE->T + cgra->get_t_max()) % cgra->get_t_max());
+	int distance = abs(nextPE->Y - srcPE->Y) + abs(nextPE->X - srcPE->X);
+	//int distance = abs(nextPE->Y - srcPE->Y) + abs(nextPE->X - srcPE->X) + regDiscourageFactor * ((nextPE->T - srcPE->T + cgra->get_t_max()) % cgra->get_t_max());
 	//int distance = regDiscourageFactor * ((nextPE->T - srcPE->T + cgra->get_t_max()) % cgra->get_t_max());
 	//std::cout << "Distance1 = " <<  distance << "\n";
 
@@ -1884,8 +1884,8 @@ bool CGRAXMLCompile::PathFinderMapper::Map(CGRA *cgra, DFG *dfg)
 
 	//	SortSCCDFG();
 	//	SortTopoGraphicalDFG();
-	//sortBackEdgePriorityASAP();
-	sortBackEdgePriorityALAP();
+	sortBackEdgePriorityASAP();
+	//sortBackEdgePriorityALAP();
 	//std::vector<int> nodeOrder {0,25,38,29,40,39,33,30,35,32,10,22,19,13,23,20,11,14,24,21,15,12};
 	std::vector<int> nodeOrder {0,35,32,25,29,38,33,40,39,30,14,20,23,11,24,21,15,12,10,22,19,13};
 	//sortGivenOrder(nodeOrder);

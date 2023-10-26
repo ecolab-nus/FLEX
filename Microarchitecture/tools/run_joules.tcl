@@ -11,7 +11,7 @@ set_db information_level 9
 #-------------------------------------------------------------------------------
 
 set DESIGN flex
-set INSTANCE /tb_top/soc_pad/hycube0
+set INSTANCE /tb_top/soc_pad/flex0
 
 set rtl_dir  "$::env(REPO_ROOT)/rtl"
 set rtl_list "globals_top.vh flex.sv tile_no_ldst.sv tile_ldst.sv iterCounter.sv ls_add_unit.sv simple_alu.sv  router.sv xbar_bypass.sv encoder_onehot.sv clkgate.sv ff_rst.sv configurator.sv"
@@ -67,8 +67,8 @@ puts stdout "Joules DB Created: $f_jdb"
                        -alias stim_run    \
                        -top_instance $INSTANCE  \
                        -interval_size 5ns  \
-                       -start 78654 ns          \
-                       -end 78914 ns          \
+                       -start 39581 ns          \
+                       -end 39911 ns          \
                        -append
 
 

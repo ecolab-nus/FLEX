@@ -385,7 +385,7 @@
         "SPM" : [{"name" : "SPM0"}]
       },
       "DATA_LAYOUT" :{
-        "x":0
+	      "h":0		      
       },
       "INIT_FILE" : "../json/test_data.json",
       "CONNECTIONS" : {
@@ -401,7 +401,7 @@
       "SUBMODS" : {
         "SPM" : [{"name" : "SPM0"}]
       },
-      "DATA_LAYOUT" :{
+      "DATA_LAYOUT" :{      
 	            },
       "INIT_FILE" : "../json/test_data.json",
       "CONNECTIONS" : {
@@ -418,7 +418,7 @@
         "SPM" : [{"name" : "SPM0"}]
       },
       "DATA_LAYOUT" :{
-	      "h":0
+        	"x":0	      
              },
       "INIT_FILE" : "../json/test_data.json",
       "CONNECTIONS" : {
